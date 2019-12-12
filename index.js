@@ -11,6 +11,8 @@ app.use(bodyParser.json())
 app.use("/", require("./routes"));
 app.use("/users", require("./routes/users"));
 app.use("/roles", require("./routes/roles"));
+app.use("/roomTypes", require("./routes/roomTypes"));
+app.use("/rooms", require("./routes/rooms"));
 
 
 if(db) {
