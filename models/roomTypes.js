@@ -13,6 +13,10 @@ const roomTypeSchema = new Schema({
   RoomPrice: {
     type: Number,
     required: true
+  },
+  roomImage: {
+    type: String,
+    required: true
   }
 });
 

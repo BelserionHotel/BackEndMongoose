@@ -35,6 +35,12 @@ app.use("/users", require("./routes/users"));
 app.use("/validate", require("./routes/validate"));
 
 app.use("/roles", require("./routes/roles"));
+app.use("/roomTypes", require("./routes/roomTypes"));
+app.use("/rooms", require("./routes/rooms"));
+app.use("/customers", require("./routes/customers"));
+app.use("/reservations", require("./routes/reservations"));
+app.use("/reservationRooms", require("./routes/reservationRooms"));
+app.use("/reservationCheckouts", require("./routes/reservationCheckouts"));
 
 
 if(db) {

@@ -12,7 +12,7 @@ const reservationRoomSchema = new Schema({
     required: true,
     ref: "rooms"
   },
-  Password: {
+  StartDateTime: {
     type: Date,
     required: true,
     default: Date.now
@@ -28,7 +28,6 @@ const reservationRoomSchema = new Schema({
   CheckInDate: {
     type: Date,
     required: false,
-    default: Date.now
   },
   CheckOutDate: {
     type: Date,

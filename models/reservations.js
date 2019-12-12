@@ -13,6 +13,7 @@ const reservation = new Schema({
   },
   Customer_id: {
     type: Schema.Types.ObjectId,
+    required: true,
     ref: "customers"
   }
 });
