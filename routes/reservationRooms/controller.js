@@ -1,32 +1,32 @@
-const { Users } = require("../../models");
+const { ReservationRooms } = require("../../models");
 const objectId = require("mongodb").ObjectId
 
 module.exports = {
   getAll: async (req, res) => {
     try {
-      const result = await Users.find().populate('Role_id');
+      const result = await ReservationRooms.find().populate('Customer_id');
 
-      res.status(200).json({ message: "Show data Users", data: result });
+      res.status(200).json({ message: "Show data ReservationRooms", data: result });
     } catch (error) {
       console.log(error);
     }
   },
   addOne: async (req, res) => {
     try {
-      const result = await Users.create(req.body);
+      const result = await ReservationRooms.create(req.body);
 
-      res.status(200).json({ message: "Add new Users", data: result });
+      res.status(200).json({ message: "Add new ReservationRooms", data: result });
       console.log(result);
     } catch (error) {
-      res.send({ msg: "error create roles" });
+      res.send({ msg: "error create Reservation Rooms" });
       console.log(error);
     }
   },
   getById: async (req, res) => {
     try {
-      const result = await Users.find({ _id: req.params.id })
+      const result = await ReservationRooms.find({ _id: req.params.id })
 
-      res.status(200).json({ message: "Show all Users by id", data: result });
+      res.status(200).json({ message: "Show all ReservationRooms by id", data: result });
     } catch (error) {
       console.log(error);
     }
@@ -34,7 +34,7 @@ module.exports = {
   deleteOne: async (req, res) => {
     const { id } = req.params;
     try {
-      const result = await Users.remove({ _id: objectId(id) });
+      const result = await ReservationRooms.remove({ _id: objectId(id) });
 
       res.status(200).json({
         message: `Data succesfully delete with id ${id}`,
@@ -47,7 +47,7 @@ module.exports = {
   updateOne: async (req, res) => {
     const { id } = req.params;
     try {
-      const result = await Users.update(
+      const result = await ReservationRooms.update(
         { _id: objectId(id) },
         { $set: req.body }
       );
