@@ -2,10 +2,10 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const ReservationCheckOutSchema = new Schema({
-  Role_id: {
+  ReservationRoom_id: {
     type: Schema.Types.ObjectId,
     required: true,
-    ref: "roles"
+    ref: "reservationRooms"
   },
   TotalCharges: {
     type: Number,
