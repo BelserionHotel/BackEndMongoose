@@ -10,6 +10,8 @@ app.use(bodyParser.json())
 
 app.use("/", require("./routes"));
 app.use("/users", require("./routes/users"));
+app.use("/validate", require("./routes/validate"));
+
 
 
 if(db) {
