@@ -10,12 +10,12 @@ app.use(bodyParser.json())
 
 app.use("/", require("./routes"));
 app.use("/users", require("./routes/users"));
+app.use("/roles", require("./routes/roles"));
 
 
 if(db) {
     app.listen(PORT, () => {
         console.log(`this app run on port ${PORT}`);
-        
     })
 
 }
