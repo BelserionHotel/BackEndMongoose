@@ -1,9 +1,19 @@
-const { PORT, DATABASE_HOST, DATABASE_NAME } = require("./environment");
-const db = require("./connection");
+const {
+    PORT,
+    DATABASE_HOST,
+    DATABASE_PASSWORD,
+    DATABASE_NAME,
+    JWT_SECRET_KEY
+} = require("./environment");
+const { connect, get, close } = require("./connection");
 
 module.exports = {
     PORT: PORT,
     DATABASE_HOST: DATABASE_HOST,
+    DATABASE_PASSWORD: DATABASE_PASSWORD,
     DATABASE_NAME: DATABASE_NAME,
-    db: db
+    connect: connect,
+    get: get,
+    close: close,
+    JWT_SECRET_KEY,
 };

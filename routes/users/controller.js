@@ -1,68 +1,114 @@
-const { Users } = require("../../models");
+const { user: users } = require("../../models");
+const { get, JWT_SECRET_KEY } = require("../../config");
+const objectId = require("mongodb").ObjectId;
 const { hashPassword, comparedPassword } = require("../../helpers");
-
-const objectId = require("mongodb").ObjectId
+const jwt = require("jsonwebtoken");
 
 module.exports = {
-  getAll: async (req, res) => {
-    try {
-      const result = await Users.find().populate('Role_id');
+    getAll: (req, res) => {
+        get()
+            .collection("users")
+            .find({})
+            .toArray()
+            .then(result => {
+                res.send({ message: "Get all datas", data: result });
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    },
+    getById: (req, res) => {
+        const { id } = req.params;
 
-      res.status(200).json({ message: "Show data Users", data: result });
-    } catch (error) {
-      console.log(error);
+        get()
+            .collection("users")
+            .findOne({ _id: objectId(id) })
+            .then(result => {
+                res.send({
+                    message: `Get data with id ${id}`,
+                    data: result
+                });
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    },
+    deleteOne: (req, res) => {
+        const { id } = req.params;
+
+        get()
+            .collection("users")
+            .deleteOne({ _id: objectId(id) })
+            .then(result => {
+                res.send({
+                    message: `Delete data with id ${id}`,
+                    data: result
+                });
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    },
+    addOne: async (req, res) => {
+        console.log(req.body);
+        
+        const hash = await hashPassword(req.body.password);
+
+        get()
+            .collection("users")
+            .insertOne({...req.body, password: hash })
+            .then(result => {
+                res.status(201).json({
+                    message: "Data successfully added",
+                    data: result
+                });
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    },
+    updateOne: (req, res) => {
+        const { id } = req.params;
+        get()
+            .collection("users")
+            .updateOne({ _id: objectId(id) }, { $set: req.body })
+            .then(result => {
+                res.send({
+                    message: `Data successfully update with id ${id}`,
+                    data: result
+                });
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    },
+    login: async (req, res) => {
+        const { body } = req;
+
+        get()
+            .collection("users")
+            .findOne({ email: body.email })
+            .then(async response => {
+                const compared = await comparedPassword(
+                    req.body.password,
+                    response.password
+                );
+
+                if (compared === true) {
+                    const { _id, email, firstName } = response;
+                    const token = jwt.sign(
+                        { id: _id, email, firstName },
+                        JWT_SECRET_KEY,
+                        {
+                            expiresIn: "30d"
+                        }
+                    );
+
+                    res.status(200).json({
+                        message: "Login successfull",
+                        data: token
+                    });
+                }
+            });
     }
-  },
-  addOne: async (req, res) => {
-    const hash = await hashPassword(req.body.Password);
-
-    try {
-      const result = await Users.create({...req.body, Password: hash });
-      
-
-      res.status(200).json({ message: "Add new Users", data: result });
-      console.log(result);
-    } catch (error) {
-      res.send({ msg: "error create roles" });
-      console.log(error);
-    }
-  },
-  getById: async (req, res) => {
-    try {
-      const result = await Users.find({ _id: req.params.id })
-
-      res.status(200).json({ message: "Show all Users by id", data: result });
-    } catch (error) {
-      console.log(error);
-    }
-  },
-  deleteOne: async (req, res) => {
-    const { id } = req.params;
-    try {
-      const result = await Users.remove({ _id: objectId(id) });
-
-      res.status(200).json({
-        message: `Data succesfully delete with id ${id}`,
-        data: result
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  },
-  updateOne: async (req, res) => {
-    const { id } = req.params;
-    try {
-      const result = await Users.update(
-        { _id: objectId(id) },
-        { $set: req.body }
-      );
-
-      res.status(200).json({
-        message: `Data succesfully update with id ${id}`,
-        data: result
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  }
 };

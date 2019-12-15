@@ -1,22 +1,21 @@
-// const { get } = require("../../config");
+const { get } = require("../../config");
 
 const signup = async ({ email, password, firstName, lastName }) => {
     try {
-        const result = {}
-        // const data = await get()
-            // .collection("users")
-            // .findOne({ email: email });
+        const result = {};
+        const data = await get()
+            .collection("users")
+            .findOne({ email: email });
 
         if (!email) {
             result.email = "Wajib Isi";
         } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
             result.email = "Format Email salah";
-        } 
-        // else if (email) {
-        //     if (data) {
-        //         result.email = "Email sudah terdaftar";
-        //     }
-        // }
+        } else if (email) {
+            if (data) {
+                result.email = "Email sudah terdaftar";
+            }
+        }
 
         if (!password) {
             result.password = "Wajib Isi";
