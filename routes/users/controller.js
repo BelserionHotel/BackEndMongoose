@@ -96,6 +96,10 @@ module.exports = {
         // console.log(req.body);
         try {
           const result = await Users.findOne({ email: req.body.email })
+               
+
+                
+      
          
 
           console.log(result);
@@ -104,7 +108,17 @@ module.exports = {
             res.status(400).json({ message: "Show all RoomTypes by id", data: result })
 
         } else {
-            res.status(200).json({ message: "Show all RoomTypes by id", data: result });
+            const token = jwt.sign(
+                { email: req.body.email },
+                JWT_SECRET_KEY,
+                {
+                    expiresIn: "30d"
+                }
+            );
+            res.status(200).json({
+                message: "Login successfull",
+                data: token
+            });
         }
         } catch (error) {
           console.log(error);
