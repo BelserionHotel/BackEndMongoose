@@ -1,22 +1,19 @@
-const { user: users } = require("../../models");
 const { get, JWT_SECRET_KEY } = require("../../config");
 const objectId = require("mongodb").ObjectId;
 const { hashPassword, comparedPassword } = require("../../helpers");
 const jwt = require("jsonwebtoken");
+const { Users } = require("../../models");
 
 module.exports = {
-    getAll: (req, res) => {
-        get()
-            .collection("users")
-            .find({})
-            .toArray()
-            .then(result => {
-                res.send({ message: "Get all datas", data: result });
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    },
+    getAll: async (req, res) => {
+        try {
+          const result = await Users.find();
+    
+          res.status(200).json({ message: "Show data RoomTypes", data: result });
+        } catch (error) {
+          console.log(error);
+        }
+      },
     getById: (req, res) => {
         const { id } = req.params;
 
@@ -50,23 +47,36 @@ module.exports = {
             });
     },
     addOne: async (req, res) => {
-        console.log(req.body);
-        
-        const hash = await hashPassword(req.body.password);
+        try {
+            const hash = await hashPassword(req.body.password);
 
-        get()
-            .collection("users")
-            .insertOne({...req.body, password: hash })
-            .then(result => {
-                res.status(201).json({
-                    message: "Data successfully added",
-                    data: result
-                });
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    },
+          const result = await Users.create({...req.body, password : hash});
+    
+          res.status(201).json({ message: "Add new RoomTypes", data: result });
+          console.log(result);
+        } catch (error) {
+          res.send({ msg: "error create roles" });
+          console.log(error);
+        }
+      },
+    // addOne: async (req, res) => {
+    //     console.log(req.body);
+        
+    //     const hash = await hashPassword(req.body.password);
+
+    //     get()
+    //         .collection("users")
+    //         .insertOne({...req.body, password: hash })
+    //         .then(result => {
+    //             res.status(201).json({
+    //                 message: "Data successfully added",
+    //                 data: result
+    //             });
+    //         })
+    //         .catch(error => {
+    //             console.log(error);
+    //         });
+    // },
     updateOne: (req, res) => {
         const { id } = req.params;
         get()
@@ -83,7 +93,27 @@ module.exports = {
             });
     },
     login: async (req, res) => {
+        // console.log(req.body);
+        try {
+          const result = await Users.findOne({ email: req.body.email })
+         
+
+          console.log(result);
+        //   console.log(result[0].email);
+        if(result===null) {
+            res.status(400).json({ message: "Show all RoomTypes by id", data: result })
+
+        } else {
+            res.status(200).json({ message: "Show all RoomTypes by id", data: result });
+        }
+        } catch (error) {
+          console.log(error);
+        }
+      },
+    logina: async (req, res) => {
         const { body } = req;
+        console.log(body);
+        
 
         get()
             .collection("users")

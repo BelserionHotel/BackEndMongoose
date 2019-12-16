@@ -1,4 +1,4 @@
-const { get } = require("../../config");
+// const { get } = require("../../config");
 const { comparedPassword } = require("../../helpers");
 
 const login = async ({ email, password }) => {
@@ -13,22 +13,23 @@ const login = async ({ email, password }) => {
 
         if (!password) {
             result.password = "Wajib Isi";
-        } else if (password) {
-            const data = await get()
-                .collection("users")
-                .findOne({ email: email })
-                .then(async result => {
-                    const compared = await comparedPassword(
-                        password,
-                        result.password
-                    );
-
-                    return compared;
-                });
-            data === undefined || data === null
-                ? (result.password = "Email/Password Salah")
-                : !data && (result.password = "Email/Password Salah");
         }
+        //  else if (password) {
+        //     const data = await get()
+        //         .collection("users")
+        //         .findOne({ email: email })
+        //         .then(async result => {
+        //             const compared = await comparedPassword(
+        //                 password,
+        //                 result.password
+        //             );
+
+        //             return compared;
+        //         });
+        //     data === undefined || data === null
+        //         ? (result.password = "Email/Password Salah")
+        //         : !data && (result.password = "Email/Password Salah");
+        // }
 
         return result;
     } catch (error) {
