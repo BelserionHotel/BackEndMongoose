@@ -17,7 +17,7 @@ const roomTypeSchema = new Schema(
     },
     RoomImage: {
       type: String,
-      required: true
+      required: false
     },
     Description: String
   },

@@ -46,6 +46,17 @@ module.exports = {
       console.log(error);
     }
   },
+  deleteAllRooms: async (req, res) => {
+    try {
+      const result = await Rooms.remove();
+      res.status(200).json({
+        message: "Data Successfully delete",
+        data: result
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  },
   updateOne: async (req, res) => {
     const { id } = req.params;
     try {
@@ -61,5 +72,9 @@ module.exports = {
     } catch (error) {
       console.log(error);
     }
+  },
+  sortByRoomNumbers:async(req,res)=>{
+    
   }
 };
+

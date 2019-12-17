@@ -16,11 +16,7 @@ const roomSchema = new Schema(
       type: String,
       required: true
     },
-    Description: {
-      type: String,
-      required: false
-    },
-    availability: Boolean
+    availability: String
   },
   { timestamps: true }
 );
