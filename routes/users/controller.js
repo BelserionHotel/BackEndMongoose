@@ -96,6 +96,12 @@ module.exports = {
         // console.log(req.body);
         try {
           const result = await Users.findOne({ email: req.body.email })
+          const compared = await comparedPassword(
+            req.body.password,
+            result.password
+        );
+        console.log(compared);
+        
                
 
                 
@@ -104,8 +110,8 @@ module.exports = {
 
           console.log(result);
         //   console.log(result[0].email);
-        if(result===null) {
-            res.status(400).json({ message: "Show all RoomTypes by id", data: result })
+        if(compared === false) {
+            res.status(400).json({ message: "failed login", data: result })
 
         } else {
             const token = jwt.sign(
