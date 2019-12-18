@@ -2,7 +2,7 @@ const { get, JWT_SECRET_KEY } = require("../../config");
 const objectId = require("mongodb").ObjectId;
 const { hashPassword, comparedPassword } = require("../../helpers");
 const jwt = require("jsonwebtoken");
-const { Users, ReservationRooms } = require("../../models");
+const { Users, ReservationRooms, Rooms } = require("../../models");
 
 module.exports = {
     getAll: async (req, res) => {
@@ -67,16 +67,21 @@ module.exports = {
         try {
             const { id } = req.params;
 
-            const { request, arrival, ...rest } = req.body;
+            const { request, arrival, Room_id, ...rest } = req.body;
 
             const user = await Users.updateOne(
                 { _id: objectId(id) },
                 { $set: rest }
             );
+
+            const room = await Rooms.findById(Room_id).populate("RoomType_id");
+
             const reservation = await ReservationRooms.create({
                 Request: request,
                 ArrivalTime: arrival,
-                Customer_id: id
+                Customer_id: id,
+                Room_id,
+                RoomPrice: room.RoomType_id.RoomPrice
             });
 
             res.send({
