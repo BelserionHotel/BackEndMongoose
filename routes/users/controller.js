@@ -117,7 +117,7 @@ module.exports = {
 
         } else {
             const token = jwt.sign(
-                { email: req.body.email,
+                { email: result.email,
                 id : result._id },
                 JWT_SECRET_KEY,
                 {
