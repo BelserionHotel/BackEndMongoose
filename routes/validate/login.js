@@ -1,42 +1,39 @@
 // const { get } = require("../../config");
+const { Users } = require("../../models");
+
 const { comparedPassword } = require("../../helpers");
 
 const login = async ({ email, password }) => {
-    try {
-        const result = {};
+  try {
+    const result = {};
 
-        if (!email) {
-            result.email = "Wajib Isi";
-        } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
-            result.email = "Format Email salah";
-        }
-
-        if (!password) {
-            result.password = "Wajib Isi";
-        }
-        //  else if (password) {
-        //     const data = await get()
-        //         .collection("users")
-        //         .findOne({ email: email })
-        //         .then(async result => {
-        //             const compared = await comparedPassword(
-        //                 password,
-        //                 result.password
-        //             );
-
-        //             return compared;
-        //         });
-        //     data === undefined || data === null
-        //         ? (result.password = "Email/Password Salah")
-        //         : !data && (result.password = "Email/Password Salah");
-        // }
-
-        return result;
-    } catch (error) {
-        console.log(error);
-
-        throw error;
+    if (!email) {
+      result.email = "u must enter a value";
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
+      result.email = "email format is wrong";
     }
+
+    if (!password) {
+      result.password = "u must enter a value";
+    } else if (password) {
+      const data = await Users.findOne({ email: email });
+
+      console.log(data);
+
+      if (data) {
+        const compared = await comparedPassword(password, data.password);
+        compared === false && (result.password = "Password is wrong");
+      } else if (data === null) {
+        result.password = "Email not registered";
+      }
+    }
+
+    return result;
+  } catch (error) {
+    console.log(error);
+
+    throw error;
+  }
 };
 
 module.exports = login;
