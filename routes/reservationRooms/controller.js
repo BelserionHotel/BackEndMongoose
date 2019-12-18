@@ -1,12 +1,14 @@
-const { ReservationRooms } = require("../../models");
-const objectId = require("mongodb").ObjectId
+const { ReservationRooms, Customers, Rooms } = require("../../models");
+const objectId = require("mongodb").ObjectId;
 
 module.exports = {
   getAll: async (req, res) => {
     try {
-      const result = await ReservationRooms.find().populate('Customer_id');
+      const result = await ReservationRooms.find().populate("Customer_id").populate("Room_id");
 
-      res.status(200).json({ message: "Show data ReservationRooms", data: result });
+      res
+        .status(200)
+        .json({ message: "Show data ReservationRooms", data: result });
     } catch (error) {
       console.log(error);
     }
@@ -15,7 +17,9 @@ module.exports = {
     try {
       const result = await ReservationRooms.create(req.body);
 
-      res.status(200).json({ message: "Add new ReservationRooms", data: result });
+      res
+        .status(200)
+        .json({ message: "Add new ReservationRooms", data: result });
       console.log(result);
     } catch (error) {
       res.send({ msg: "error create Reservation Rooms" });
@@ -24,9 +28,11 @@ module.exports = {
   },
   getById: async (req, res) => {
     try {
-      const result = await ReservationRooms.find({ _id: req.params.id })
+      const result = await ReservationRooms.findById(req.params.id).populate("Customer_id").populate("Room_id");
 
-      res.status(200).json({ message: "Show all ReservationRooms by id", data: result });
+      res
+        .status(200)
+        .json({ message: "Show all ReservationRooms by id", data: result });
     } catch (error) {
       console.log(error);
     }
@@ -59,5 +65,26 @@ module.exports = {
     } catch (error) {
       console.log(error);
     }
+  },
+  bookingRooms: async (req, res) => {
+    const {
+      StartDateTime,
+      DurationNights,
+      RoomPrice,
+      CheckInDateTime,
+      CheckOutDateTime
+    } = req.body;
+    const customer = res.locals.Customer_id;
+    const Room = res.locals.Room_id;
+
+    const booking = new ReservationRooms({
+      StartDateTime,
+      DurationNights,
+      RoomPrice,
+      CheckInDateTime,
+      CheckOutDateTime
+    });
+
+    ReservationRooms.findById(Customer_id._id).populate
   }
 };

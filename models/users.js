@@ -3,7 +3,11 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema(
   {
-    username: {
+    name: {
+      type: String,
+      required: false
+    },
+    Surname: {
       type: String,
       required: false
     },
@@ -11,14 +15,29 @@ const userSchema = new Schema(
       type: String,
       required: true
     },
+    phone: {
+      type: String,
+      required: false
+    },
+    address: {
+      type: String,
+      required: false
+    },
+    city: {
+      type: String,
+      required: false
+    },
+    country: {
+      type: String,
+      required: false
+    },
+    zip: {
+      type: String,
+      required: false
+    },
     password: {
       type: String,
       required: true
-    },
-    DateCreated: {
-      type: Date,
-      required: true,
-      default: Date.now
     },
     Role_id: {
       type: Schema.Types.ObjectId,

@@ -3,10 +3,10 @@ const Schema = mongoose.Schema;
 
 const reservationRoomSchema = new Schema(
   {
-    Reservation_id: {
+    Customer_id: {
       type: Schema.Types.ObjectId,
       required: true,
-      ref: "reservations"
+      ref: "customers"
     },
     Room_id: {
       type: Schema.Types.ObjectId,
@@ -33,7 +33,9 @@ const reservationRoomSchema = new Schema(
     CheckOutDate: {
       type: Date,
       required: false
-    }
+    },
+    Request: { type: String, required: false },
+    ArrivalTime: { type: String, required: false }
   },
   { timestamps: true }
 );
