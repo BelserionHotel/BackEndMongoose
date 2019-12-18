@@ -24,6 +24,10 @@ app.use(
                 methods: ["POST"]
             },
             {
+                url: "/rooms/availables",
+                methods: ["GET"]
+            },
+            {
                 url: "/users/login",
                 methods: ["POST", "GET"]
             },
@@ -55,9 +59,9 @@ app.use("/reservationRooms", require("./routes/reservationRooms"));
 app.use("/roles", require("./routes/roles"));
 
 if (db) {
-  app.listen(PORT, () => {
-    console.log(`THIS APP LISTEN ON PORT ${PORT}`);
-  });
+    app.listen(PORT, () => {
+        console.log(`THIS APP LISTEN ON PORT ${PORT}`);
+    });
 } else {
-  console.log("Something is wrong, of database");
+    console.log("Something is wrong, of database");
 }
