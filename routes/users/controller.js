@@ -102,6 +102,8 @@ module.exports = {
         );
         console.log(compared);
         
+
+        
                
 
                 
@@ -111,11 +113,12 @@ module.exports = {
           console.log(result);
         //   console.log(result[0].email);
         if(compared === false) {
-            res.status(400).json({ message: "failed login, try again", data: result })
+            res.send({ message: "failed login", data: result })
 
         } else {
             const token = jwt.sign(
-                { email: req.body.email },
+                { email: req.body.email,
+                id : result._id },
                 JWT_SECRET_KEY,
                 {
                     expiresIn: "30d"
