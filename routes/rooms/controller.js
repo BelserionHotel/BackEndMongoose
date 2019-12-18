@@ -1,4 +1,4 @@
-const { Rooms } = require("../../models");
+const { Rooms, ReservationRooms } = require("../../models");
 const objectId = require("mongodb").ObjectId;
 
 module.exports = {
@@ -73,8 +73,18 @@ module.exports = {
       console.log(error);
     }
   },
-  sortByRoomNumbers:async(req,res)=>{
-    
+  sortByRoomNumbers: async (req, res) => {},
+  getByAvailable:async(req,res)=>{
+    const RoomType = res.locals.RoomType_id
+    ReservationRooms.where({availability : 'Availae'})
+    .populate('Room_id').populate('User_id')
+    .exec(function(err,foundAvailable){
+      
+    if (err) {
+      return res.status(422).send(err);
+    }
+
+    return res.json(foundAvailable);
+    })
   }
 };
-
