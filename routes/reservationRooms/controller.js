@@ -66,6 +66,7 @@ module.exports = {
       console.log(error);
     }
   },
+  
   bookingRooms: async (req, res) => {
     const {
       StartDateTime,
