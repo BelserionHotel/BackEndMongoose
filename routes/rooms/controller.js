@@ -76,8 +76,8 @@ module.exports = {
   sortByRoomNumbers: async (req, res) => {},
   getByAvailable:async(req,res)=>{
     const RoomType = res.locals.RoomType_id
-    ReservationRooms.where({availability : 'Availae'})
-    .populate('Room_id').populate('User_id')
+    Rooms.where({availability : 'Available'})
+    .populate('RoomType_id')
     .exec(function(err,foundAvailable){
       
     if (err) {
