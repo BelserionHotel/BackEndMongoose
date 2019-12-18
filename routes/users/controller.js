@@ -102,6 +102,8 @@ module.exports = {
         );
         console.log(compared);
         
+
+        
                
 
                 
@@ -115,7 +117,8 @@ module.exports = {
 
         } else {
             const token = jwt.sign(
-                { email: req.body.email },
+                { email: req.body.email,
+                id : result._id },
                 JWT_SECRET_KEY,
                 {
                     expiresIn: "30d"
