@@ -46,14 +46,12 @@ app.use((err, req, res, next) => {
 
 //routing ways
 app.use("/", require("./routes"));
-app.use("/users", require("./routes/users"));
 app.use("/validate", require("./routes/validate"));
+app.use("/users", require("./routes/users"));
 app.use("/rooms", require("./routes/rooms"));
 app.use("/roomTypes", require("./routes/roomTypes"));
-app.use("/customers", require("./routes/customers"));
 app.use("/reservationCheckouts", require("./routes/reservationCheckouts"));
 app.use("/reservationRooms", require("./routes/reservationRooms"));
-app.use("/reservations", require("./routes/reservations"));
 app.use("/roles", require("./routes/roles"));
 
 if (db) {
