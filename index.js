@@ -20,11 +20,11 @@ app.use(
                 methods: ["GET"]
             },
             {
-                url: "/user",
+                url: "/users",
                 methods: ["POST"]
             },
             {
-                url: "/user/login",
+                url: "/users/login",
                 methods: ["POST", "GET"]
             },
             {
