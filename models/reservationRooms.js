@@ -6,7 +6,7 @@ const reservationRoomSchema = new Schema(
         Customer_id: {
             type: Schema.Types.ObjectId,
             required: true,
-            ref: "customers"
+            ref: "users"
         },
         Room_id: {
             type: Schema.Types.ObjectId,
