@@ -37,6 +37,19 @@ module.exports = {
       console.log(error);
     }
   },
+  ugetById: async (req, res) => {
+    try {
+      const result = await ReservationRooms.find({Customer_id:req.params.id})
+      console.log(req.params.id);
+      
+
+      res
+        .status(200)
+        .json({ message: "Show all ReservationRooms by id", data: result });
+    } catch (error) {
+      console.log(error);
+    }
+  },
   deleteOne: async (req, res) => {
     const { id } = req.params;
     try {
