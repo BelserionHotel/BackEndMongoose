@@ -31,7 +31,8 @@ const reservationRoomSchema = new Schema(
         },
         status: {
             type: String,
-            required: false
+            required: false,
+            default: "pending"
         },
         Request: { type: String, required: false },
         ArrivalTime: { type: String, required: false }
