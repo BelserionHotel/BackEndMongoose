@@ -8,6 +8,14 @@ const ReservationCheckOutSchema = new Schema(
       required: true,
       ref: "reservationRooms"
     },
+    payment_type: {
+      type: String,
+      required: true,
+    },
+    cc_number: {
+      type: String,
+      required: true,
+    },
     TotalCharges: {
       type: Number,
       required: true
