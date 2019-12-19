@@ -13,11 +13,6 @@ const reservationRoomSchema = new Schema(
       required: true,
       ref: "rooms"
     },
-    StartDateTime: {
-      type: Date,
-      required: true,
-      default: Date.now
-    },
     DurationNights: {
       type: Number,
       required: true
