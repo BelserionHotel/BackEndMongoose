@@ -6,6 +6,7 @@ router.get("/:id", require("./controller").getById);
 router.get("/u/:id", require("./controller").ugetById);
 
 router.delete("/:id", require("./controller").deleteOne);
+router.delete("/", require("./controller").deleteAllReservationRooms);
 router.patch("/:id", require("./controller").updateOne);
 
 module.exports = router;

@@ -47,6 +47,22 @@ module.exports = {
                 console.log(error);
             });
     },
+    delete: (req, res) => {
+        const { id } = req.params;
+
+        get()
+            .collection("users")
+            .delete()
+            .then(result => {
+                res.send({
+                    message: `Delete data user`,
+                    data: result
+                });
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    },
     addOne: async (req, res) => {
         try {
             const hash = await hashPassword(req.body.password);

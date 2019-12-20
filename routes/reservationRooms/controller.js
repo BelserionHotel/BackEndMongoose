@@ -110,5 +110,16 @@ module.exports = {
         });
 
         ReservationRooms.findById(Customer_id._id).populate;
-    }
+    },
+    deleteAllReservationRooms: async (req, res) => {
+        try {
+          const result = await ReservationRooms.remove();
+          res.status(200).json({
+            message: "Data Successfully delete",
+            data: result
+          });
+        } catch (error) {
+          console.log(error);
+        }
+      },
 };

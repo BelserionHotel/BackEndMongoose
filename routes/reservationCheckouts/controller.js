@@ -59,5 +59,16 @@ module.exports = {
     } catch (error) {
       console.log(error);
     }
-  }
+  },
+  deleteAllCheckout: async (req, res) => {
+    try {
+      const result = await ReservationCheckouts.remove();
+      res.status(200).json({
+        message: "Data Successfully delete",
+        data: result
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };
