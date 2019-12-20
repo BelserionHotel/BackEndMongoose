@@ -31,11 +31,11 @@ const reservationRoomSchema = new Schema(
         },
         status: {
             type: String,
-            required: false,
+            required: true,
             default: "pending"
         },
-        Request: { type: String, required: true },
-        ArrivalTime: { type: String, required: true }
+        Request: { type: String, required: false },
+        ArrivalTime: { type: String, required: false }
     },
     { timestamps: true }
 );
