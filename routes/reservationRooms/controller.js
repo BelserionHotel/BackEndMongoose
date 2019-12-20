@@ -49,8 +49,10 @@ module.exports = {
         try {
             const result = await ReservationRooms.find({
                 Customer_id: ObjectId(req.params.id),
-                status:"pending"
-            }).populate("Customer_id").populate("Room_id")
+                status: "pending"
+            })
+                .populate("Customer_id")
+                .populate("Room_id");
 
             res.status(200).json({
                 message: "Show all ReservationRooms by id",
@@ -113,13 +115,44 @@ module.exports = {
     },
     deleteAllReservationRooms: async (req, res) => {
         try {
-          const result = await ReservationRooms.remove();
-          res.status(200).json({
-            message: "Data Successfully delete",
-            data: result
-          });
+            const result = await ReservationRooms.remove();
+            res.status(200).json({
+                message: "Data Successfully delete",
+                data: result
+            });
         } catch (error) {
-          console.log(error);
+            console.log(error);
         }
-      },
+    },
+    checkout: async (req, res) => {
+        try {
+            const {
+                params: { id }
+            } = req;
+
+            const room = await ReservationRooms.find({
+                Customer_id: objectId(id),
+                status: "pending"
+            });
+
+            const result = await ReservationRooms.update(
+                { Customer_id: objectId(id), status: "pending" },
+                { $set: { status: "paid" } }
+            );
+
+            const roomStatus = await Rooms.update(
+                {
+                    _id: objectId(room[0].Room_id)
+                },
+                { $set: { availability: "booked" } }
+            );
+
+            res.status(200).send({
+                message: "Your booking is successfully",
+                data: { result, roomStatus }
+            });
+        } catch (error) {
+            throw error;
+        }
+    }
 };
