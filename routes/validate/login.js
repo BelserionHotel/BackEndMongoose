@@ -8,13 +8,13 @@ const login = async ({ email, password }) => {
     const result = {};
 
     if (!email) {
-      result.email = "u must enter a value";
+      result.email = "You must enter a value";
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
       result.email = "email format is wrong";
     }
 
     if (!password) {
-      result.password = "u must enter a value";
+      result.password = "You must enter a value";
     } else if (password) {
       const data = await Users.findOne({ email: email });
 

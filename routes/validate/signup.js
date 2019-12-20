@@ -10,7 +10,7 @@ const signup = async ({ email, password, name }) => {
         //     .findOne({ email: email });
 
         if (!email) {
-            result.email = "u must enter a value";
+            result.email = "You must enter a value";
         } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
             result.email = "email format is wrong";
         }
@@ -21,13 +21,13 @@ const signup = async ({ email, password, name }) => {
         }
 
         if (!password) {
-            result.password = "u must enter a value";
+            result.password = "You must enter a value";
         } else if (password.length < 8) {
             result.password = "Password minimum 8 character";
         }
 
         if (!name) {
-            result.name = "u must enter a value";
+            result.name = "You must enter a value";
         }
 
 

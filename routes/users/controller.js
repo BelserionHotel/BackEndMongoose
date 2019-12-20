@@ -101,8 +101,11 @@ module.exports = {
             const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
 
             const reservation = await ReservationRooms.create({
-                Request: request,
-                ArrivalTime: arrival,
+                
+                Request: req.body.request,
+                ArrivalTime: req.body.arrival,
+                CheckInDate: req.body.CheckInDate,
+                CheckOutDate: req.body.CheckOutDate,
                 Customer_id: id,
                 Room_id,
                 RoomPrice: room.RoomType_id.RoomPrice,
