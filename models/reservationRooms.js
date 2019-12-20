@@ -23,19 +23,19 @@ const reservationRoomSchema = new Schema(
         },
         CheckInDate: {
             type: Date,
-            required: false
+            required: true
         },
         CheckOutDate: {
             type: Date,
-            required: false
+            required: true
         },
         status: {
             type: String,
             required: false,
             default: "pending"
         },
-        Request: { type: String, required: false },
-        ArrivalTime: { type: String, required: false }
+        Request: { type: String, required: true },
+        ArrivalTime: { type: String, required: true }
     },
     { timestamps: true }
 );
